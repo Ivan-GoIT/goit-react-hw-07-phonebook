@@ -1,9 +1,9 @@
 const { filterInitState } = require("./filters.init-state");
 
-export const filterReduser = (state=filterInitState, action) => {
-    switch (action.type) {
+export const filterReduser = (state=filterInitState, {type,payload}) => {
+    switch (type) {
       case 'app/setFilter':
-        return action.payload;
+        return payload;
   
       default:
         return state;

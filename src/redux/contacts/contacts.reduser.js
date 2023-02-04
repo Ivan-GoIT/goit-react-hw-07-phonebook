@@ -1,12 +1,12 @@
 import { contactsInitState } from 'redux/contacts/contacts.init-state';
 
-export const contactsReduser = (state = contactsInitState, action) => {
-  switch (action.type) {
+export const contactsReduser = (state = contactsInitState, {type,payload}) => {
+  switch (type) {
     case 'app/addContact':
-      return [...state, action.payload];
+      return [...state, payload];
 
     case 'app/deleteContact':
-      return state.filter(({ id: contactId }) => contactId !== action.payload);
+      return state.filter(({ id: contactId }) => contactId !== payload);
 
     default:
       return state;
