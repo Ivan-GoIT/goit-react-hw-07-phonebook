@@ -1,11 +1,8 @@
-const { filterInitState } = require("./filters.init-state");
+// import { createReducer } from '@reduxjs/toolkit';
+// import { filterChangeAction } from './filter.action';
 
-export const filterReduser = (state=filterInitState, {type,payload}) => {
-    switch (type) {
-      case 'app/setFilter':
-        return payload;
-  
-      default:
-        return state;
-    }
-  };
+// const { filterInitState } = require('./filter.init-state');
+
+// export const filterReduser = createReducer(filterInitState, builder => {
+//   builder.addCase(filterChangeAction, (_, { payload }) => payload);
+// });

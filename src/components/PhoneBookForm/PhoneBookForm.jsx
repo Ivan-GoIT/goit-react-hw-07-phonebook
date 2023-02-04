@@ -2,8 +2,9 @@ import { useState } from 'react';
 import css from './PhoneBookForm.module.css';
 import { PropTypes } from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { contactsAddContactAction } from 'redux/contacts/contacts.action';
+// import { contactsAddContactAction } from 'redux/contacts/contacts.action';
 import { nanoid } from 'nanoid';
+import { addContactAction } from 'redux/contacts/contacts.slice';
 
 export const PhoneBookForm = ({ onSubmitForm }) => {
   const [name, setName] = useState('');
@@ -29,7 +30,6 @@ export const PhoneBookForm = ({ onSubmitForm }) => {
       return prevName === name && prevNumber === number;
     }).length;
 
-
   const handleFormSubmit = evt => {
     evt.preventDefault();
     if (isContactInState({ name, number })) {
@@ -37,7 +37,7 @@ export const PhoneBookForm = ({ onSubmitForm }) => {
       return;
     }
 
-    dispatch(contactsAddContactAction({ id: nanoid(), name, number }));
+    dispatch(addContactAction({ id: nanoid(), name, number }));
 
     setName('');
     setNumber('');
