@@ -25,6 +25,8 @@ export const PhoneBookForm = ({ onSubmitForm }) => {
     }
   };
 
+  console.log('contacts', contacts);
+
   const isContactInState = ({ name, number }) =>
     !!contacts.filter(({ name: prevName, number: prevNumber }) => {
       return prevName === name && prevNumber === number;

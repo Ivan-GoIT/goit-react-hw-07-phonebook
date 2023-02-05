@@ -1,1 +1,1 @@
-export const contactsInitState=JSON.parse(window.localStorage.getItem('contacts')) || []
+export const contactsInitState=[]

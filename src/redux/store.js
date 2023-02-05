@@ -1,15 +1,46 @@
-import { configureStore } from '@reduxjs/toolkit';
-// import { contactsReduser } from './contacts/contacts.reduser';
-// import { filterReduser } from './filter/filter.reduser';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { initialState } from './rootInitialState';
-import {contactsReducer} from './contacts/contacts.slice'
+import { contactsReducer } from './contacts/contacts.slice';
 import { filterReducer } from './filter/filter.slice';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
+const persistConfig = {
+  key: 'contacts',
+  storage,
+  //whitelist:['contacts']
+};
 
-export const store = configureStore({ 
-    reducer: {
-        contacts: contactsReducer,
-        filter: filterReducer,
+// const rootReduser = combineReducers({
+//   contacts: contactsReducer,
+//   filter: filterReducer,
+// });
+
+ const persistedReducer = persistReducer(persistConfig, contactsReducer);
+
+export const store = configureStore({
+  reducer: {
+    contacts: persistedReducer,
+    filter: filterReducer,
+  },
+  
+  devTools: true,
+  preloadedState: initialState,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    devTools:true, 
-    preloadedState: initialState });
+    }),
+});
+
+export const persistor = persistStore(store);
