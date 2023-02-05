@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { initialState } from './rootInitialState';
 import { contactsReducer } from './contacts/contacts.slice';
 import { filterReducer } from './filter/filter.slice';
