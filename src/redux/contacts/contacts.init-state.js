@@ -1,1 +1,1 @@
-export const contactsInitState=[]
+export const contactsInitState = [];
