@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import css from './PhoneBookForm.module.css';
 import { PropTypes } from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
-import { addContactAction } from 'redux/contacts/contacts.slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact, fetchContacts } from 'redux/operations';
+import { getContacts } from 'redux/selectors';
 
-export const PhoneBookForm = ({ onSubmitForm }) => {
+export const PhoneBookForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
   const handleCanngeInput = ({ currentTarget: { name, value } }) => {
@@ -24,20 +25,22 @@ export const PhoneBookForm = ({ onSubmitForm }) => {
     }
   };
 
-  const isContactInState = ({ name, number }) =>
-    !!contacts.filter(({ name: prevName, number: prevNumber }) => {
+  const isContactInState = ({ name, number }) => {
+    return !!contacts.filter(({ name: prevName, number: prevNumber }) => {
       return prevName === name && prevNumber === number;
     }).length;
+  };
 
   const handleFormSubmit = evt => {
     evt.preventDefault();
+
     if (isContactInState({ name, number })) {
       alert('Contact is in phonebook');
       return;
     }
 
-    dispatch(addContactAction({ id: nanoid(), name, number }));
-
+    dispatch(addContact({ id: nanoid(), name, number }));
+    
     setName('');
     setNumber('');
   };

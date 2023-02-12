@@ -3,3 +3,8 @@
     align-items: center;
     justify-content: space-between;
 }
+
+li>ul{
+    padding-left: 0;
+    width: 280px;
+}

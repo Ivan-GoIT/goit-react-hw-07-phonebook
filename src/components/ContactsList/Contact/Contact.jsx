@@ -6,9 +6,10 @@ export const Contact = ({ contact: { id, name, number }, onDelete }) => {
 
   return (
     <li className={css.listItem}>
-      <p>
-        {name}: {number}
-      </p>
+      <ul className={css.listItem}>
+        <p>{name}:</p>
+        <p>{number}</p>
+      </ul>
       <button type="button" onClick={handleClick}>
         Delete
       </button>
