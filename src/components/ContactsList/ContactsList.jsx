@@ -24,9 +24,9 @@ export const ContactsList = () => {
     [contacts, filter]
   );
 
-  // useEffect(() => {
-  //   dispatch(fetchContacts());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <>
