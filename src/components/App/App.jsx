@@ -4,7 +4,7 @@ import { ContactsList } from 'components/ContactsList/ContactsList';
 import { FilterByName } from 'components/FilterByName/FilterByName';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts, getError, getIsLoading } from 'redux/selectors';
-import { fetchContacts } from 'redux/operations';
+import { fetchContacts } from 'redux/contacts/contactsThunk';
 import { useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,9 +20,7 @@ export const App = () => {
     toast.error(error);
   }
 
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+
 
   return (
     <>
@@ -39,23 +37,21 @@ export const App = () => {
         theme="colored"
       />
 
-      <Section title="Phonebook">
-        {!isLoading && <PhoneBookForm />}
-        </Section>
+      <Section title="Phonebook">{!isLoading && <PhoneBookForm />}</Section>
       {isLoading ? (
         <Loader />
       ) : (
-        !!contacts.length && (
-          <>
+        <>
+          {!!contacts.length && (
             <Section>
               <FilterByName />
             </Section>
+          )}
 
-            <Section title="ContactsList">
-              <ContactsList />
-            </Section>
-          </>
-        )
+          <Section title="ContactsList">
+            <ContactsList />
+          </Section>
+        </>
       )}
     </>
   );

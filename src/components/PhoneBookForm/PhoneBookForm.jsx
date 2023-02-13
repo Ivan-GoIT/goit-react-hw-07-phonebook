@@ -3,7 +3,7 @@ import css from './PhoneBookForm.module.css';
 import { PropTypes } from 'prop-types';
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact, fetchContacts } from 'redux/operations';
+import { addContact } from 'redux/contacts/contactsThunk';
 import { getContacts } from 'redux/selectors';
 
 export const PhoneBookForm = () => {
@@ -40,7 +40,7 @@ export const PhoneBookForm = () => {
     }
 
     dispatch(addContact({ id: nanoid(), name, number }));
-    
+
     setName('');
     setNumber('');
   };

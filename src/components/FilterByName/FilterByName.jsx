@@ -1,3 +1,5 @@
+import debounce from 'lodash.debounce';
+import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { filterChangeAction } from 'redux/filter/filterSlice';
 import css from './FilterByName.module.css';
@@ -6,8 +8,14 @@ export const FilterByName = () => {
   const filter = useSelector(state => state.filter);
   const dispatch = useDispatch();
 
+  const searchContacts=useMemo(
+    ()=>{
+      return debounce(filter=>{dispatch(filterChangeAction(filter))},1000)
+    },[dispatch]
+  )
+
   const handleFilterChange = evt => {
-    dispatch(filterChangeAction(evt.currentTarget.value));
+    searchContacts(evt.currentTarget.value)
   };
 
   return (
