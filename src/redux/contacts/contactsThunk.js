@@ -8,7 +8,7 @@ export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
   async (_, thunkAPI) => {
     try {
-      const {data} = await axios.get('/contacts');
+      const { data } = await axios.get('/contacts');
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -16,24 +16,27 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 
+const contactStr = contact => `Contact \n
+name: ${contact.name} \n
+phone: ${contact.number} \n
+`;
+
 export const addContact = createAsyncThunk(
   'contacts/addContacts',
   async (contact, thunkAPI) => {
     try {
-      const {data,status} = await axios.post('/contacts',contact);
+      const { data, status } = await axios.post('/contacts', contact);
 
-      if(status===201){
-        thunkAPI.dispatch(fetchContacts())
+      if (status === 201) {
+        thunkAPI.dispatch(fetchContacts());
       }
 
-      toast.success(data.toString())
+      toast.success(contactStr(data).concat('is created'));
 
       return data;
-
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
-
   }
 );
 
@@ -41,19 +44,18 @@ export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
   async (id, thunkAPI) => {
     try {
-      const {data,status} = await axios.delete(`/contacts/${id}`);
+      const { data, status } = await axios.delete(`/contacts/${id}`);
 
-      if(status===200){
-        thunkAPI.dispatch(fetchContacts())
+      if (status === 200) {
+        thunkAPI.dispatch(fetchContacts());
       }
 
-      return data;
+      toast.success(contactStr(data).concat('deleted'));
 
+
+      return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
-
   }
 );
-
-
