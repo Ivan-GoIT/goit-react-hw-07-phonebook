@@ -3,7 +3,7 @@ import css from './ContactsList.module.css';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
-import { fetchContacts } from 'redux/contacts/contactsThunk';
+import { deleteContact,  } from 'redux/contacts/contactsThunk';
 
 export const ContactsList = () => {
   const dispatch=useDispatch()
@@ -11,7 +11,7 @@ export const ContactsList = () => {
   const filter = useSelector(state => state.filter);
 
   const handleDeleteContact = id => {
-    //dispatch(deleteContactAction(id));
+    dispatch(deleteContact(id));
   };
 
   const filterNormalize = filter => filter.toLowerCase();
@@ -24,13 +24,9 @@ export const ContactsList = () => {
     [contacts, filter]
   );
 
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
-
   return (
     <>
-      {!contacts.length ? (
+      {!contactListToDisplay.length ? (
         <p>No contacts to display</p>
       ) : (
         <ul className={css.contactsList}>

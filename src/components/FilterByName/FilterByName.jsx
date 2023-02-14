@@ -8,14 +8,14 @@ export const FilterByName = () => {
   const filter = useSelector(state => state.filter);
   const dispatch = useDispatch();
 
-  const searchContacts=useMemo(
-    ()=>{
-      return debounce(filter=>{dispatch(filterChangeAction(filter))},1000)
-    },[dispatch]
-  )
+  // const searchContacts = useMemo((searchString) => {
+  //   return debounce(() => {
+  //     dispatch(filterChangeAction(searchString));
+  //   }, 1000);
+  // }, [dispatch]);
 
   const handleFilterChange = evt => {
-    searchContacts(evt.currentTarget.value)
+    dispatch(filterChangeAction(evt.currentTarget.value));
   };
 
   return (

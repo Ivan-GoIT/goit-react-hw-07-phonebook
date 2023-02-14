@@ -20,7 +20,10 @@ export const App = () => {
     toast.error(error);
   }
 
-
+  
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <>
