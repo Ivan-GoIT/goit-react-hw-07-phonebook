@@ -3,5 +3,5 @@ import { filterInitialState } from "./filter/filterInitialState";
 
 export const rootInitialState={
     contacts: contactsInitialState,
-    filter: filterInitialState
+    filter: filterInitialState,
   }
