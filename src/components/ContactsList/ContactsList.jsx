@@ -1,32 +1,26 @@
 import { Contact } from './Contact/Contact';
 import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts, getFilter } from 'redux/selectors';
+import { getContacts, getFilter, selectFilteredContacts, selectIsLoading } from 'redux/selectors';
 import { deleteContact,  } from 'redux/contacts/contactsThunk';
 import css from './ContactsList.module.css';
+import Loader from 'components/Loader/Loader';
 
 export const ContactsList = () => {
   const dispatch=useDispatch()
-  const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
 
   const handleDeleteContact = id => {
     dispatch(deleteContact(id));
   };
 
-  const filterNormalize = filter => filter.toLowerCase();
 
-  const contactListToDisplay = useMemo(
-    () =>
-      contacts.filter(({ name }) =>
-        name.toLowerCase().includes(filterNormalize(filter))
-      ),
-    [contacts, filter]
-  );
+  const contactListToDisplay = useSelector(selectFilteredContacts)
+  const isLoading=useSelector(selectIsLoading)
 
   return (
     <>
-      {!contactListToDisplay.length ? (
+      {isLoading?(<Loader/>):      
+      (!contactListToDisplay.length ? (
         <p>No contacts to display</p>
       ) : (
         <ul className={css.contactsList}>
@@ -38,7 +32,7 @@ export const ContactsList = () => {
             />
           ))}
         </ul>
-      )}
+      ))}
     </>
   );
 };

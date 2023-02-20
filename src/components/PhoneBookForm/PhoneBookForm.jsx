@@ -4,12 +4,13 @@ import { PropTypes } from 'prop-types';
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contacts/contactsThunk';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
+import { toast } from 'react-toastify';
 
 export const PhoneBookForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const handleCanngeInput = ({ currentTarget: { name, value } }) => {
@@ -35,7 +36,7 @@ export const PhoneBookForm = () => {
     evt.preventDefault();
 
     if (isContactInState({ name, number })) {
-      alert('Contact is in phonebook');
+      toast.info('Contact is in phonebook');
       return;
     }
 

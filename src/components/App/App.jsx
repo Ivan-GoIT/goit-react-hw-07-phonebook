@@ -1,29 +1,15 @@
-import { Section } from 'components/Section/Section';
-import { PhoneBookForm } from 'components/PhoneBookForm/PhoneBookForm';
-import { ContactsList } from 'components/ContactsList/ContactsList';
-import { FilterByName } from 'components/FilterByName/FilterByName';
-import { useDispatch, useSelector } from 'react-redux';
-import { getContacts, getError, getIsLoading } from 'redux/selectors';
-import { fetchContacts } from 'redux/contacts/contactsThunk';
-import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { selectError } from 'redux/selectors';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Loader from 'components/Loader/Loader';
+import { PhoneApp } from 'components/PhoneApp/PhoneApp';
 
 export const App = () => {
-  const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
-  const isLoading = useSelector(getIsLoading);
-  const error = useSelector(getError);
+  const error = useSelector(selectError);
 
   if (error) {
     toast.error(error);
   }
-
-  
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
 
   return (
     <>
@@ -39,23 +25,7 @@ export const App = () => {
         pauseOnHover
         theme="colored"
       />
-
-      <Section title="Phonebook">{!isLoading && <PhoneBookForm />}</Section>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          {!!contacts.length && (
-            <Section>
-              <FilterByName />
-            </Section>
-          )}
-
-          <Section title="ContactsList">
-            <ContactsList />
-          </Section>
-        </>
-      )}
+      <PhoneApp />
     </>
   );
 };
